@@ -20,13 +20,14 @@ class ShootDownMissiles:
 
         self.target = Target(self)
         self.missile = Missile(self)
+        self.missiles = pygame.sprite.Group()
 
 
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            self.missile.update()
+            self.missiles.update()
             self.target.update()
             self._update_screen()
 
@@ -52,6 +53,9 @@ class ShootDownMissiles:
             self.target.moving_down = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._launch_missile()
+
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
@@ -64,10 +68,16 @@ class ShootDownMissiles:
         elif event.key == pygame.K_DOWN:
             self.target.moving_down = False
 
+    def _launch_missile(self):
+        """Create a new missile and add it to the missiles group."""
+        new_missile = Missile(self)
+        self.missiles.add(new_missile)
+
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
-        self.missile.blitme()
+        for missile in self.missiles.sprites():
+            missile.blitme()
         self.target.blitme()
 
         pygame.display.flip()
