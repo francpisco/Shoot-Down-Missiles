@@ -13,3 +13,6 @@ class Settings:
 
         # Target settings
         self.target_speed = 1.5
+
+        # Missile settings
+        self.missile_speed = 1.2

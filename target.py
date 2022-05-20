@@ -17,7 +17,7 @@ class Target:
         # Start each new target at the bottom center of the screen.
         self.rect.center = self.screen_rect.center
 
-        # Store a decimal value for the ship's horizontal position.
+        # Store a decimal value for the taget's horizontal position.
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
 

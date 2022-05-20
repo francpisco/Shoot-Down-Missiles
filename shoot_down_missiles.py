@@ -4,6 +4,7 @@ import pygame
 
 from settings import Settings
 from target import Target
+from missile import Missile
 
 class ShootDownMissiles:
     """Main class to manage game assets and behavior"""
@@ -18,12 +19,14 @@ class ShootDownMissiles:
         pygame.display.set_caption("Shoot Down Missiles!")
 
         self.target = Target(self)
+        self.missile = Missile(self)
 
 
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             self._check_events()
+            self.missile.update()
             self.target.update()
             self._update_screen()
 
@@ -47,6 +50,8 @@ class ShootDownMissiles:
             self.target.moving_up = True
         elif event.key == pygame.K_DOWN:
             self.target.moving_down = True
+        elif event.key == pygame.K_q:
+            sys.exit()
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
@@ -62,6 +67,7 @@ class ShootDownMissiles:
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
+        self.missile.blitme()
         self.target.blitme()
 
         pygame.display.flip()
