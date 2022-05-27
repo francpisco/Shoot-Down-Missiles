@@ -16,3 +16,6 @@ class Settings:
 
         # Missile settings
         self.missile_speed = 1.2
+        self.missile_width = 5
+        self.missile_height = 30
+        self.missile_color = (70, 70, 70)

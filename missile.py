@@ -14,10 +14,11 @@ class Missile(Sprite):
         self.screen = sdm_game.screen
         self.settings = sdm_game.settings
         self.screen_rect = self.screen.get_rect()
+        self.color = self.settings.missile_color
 
-        self.image = pygame.image.load('images/missile_2.png')
-        self.rect = self.image.get_rect()
-
+        # Create a missile a origin and then place it at midscreen top
+        self.rect = pygame.Rect(0, 0, self.settings.missile_width,
+                                self.settings.missile_height)
         self.rect.midbottom = self.screen_rect.midtop
 
         # Store decimal values of the missile position
@@ -33,6 +34,6 @@ class Missile(Sprite):
         # Update the rect position.
         self.rect.y = self.y
 
-    def blitme(self):
+    def draw_missile(self):
         """Draw missile on current location."""
-        self.screen.blit(self.image, self.rect)
+        pygame.draw.rect(self.screen, self.color, self.rect)

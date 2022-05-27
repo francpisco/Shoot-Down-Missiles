@@ -77,7 +77,7 @@ class ShootDownMissiles:
         """Update images on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
         for missile in self.missiles.sprites():
-            missile.blitme()
+            missile.draw_missile()
         self.target.blitme()
 
         pygame.display.flip()
