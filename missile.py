@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
+from random import randint
 
 class Missile(Sprite):
     """A class to manage oncoming missiles to be shoot down."""
@@ -19,7 +20,8 @@ class Missile(Sprite):
         # Create a missile a origin and then place it at midscreen top
         self.rect = pygame.Rect(0, 0, self.settings.missile_width,
                                 self.settings.missile_height)
-        self.rect.midbottom = self.screen_rect.midtop
+        
+        self._set_initial_position()
 
         # Store decimal values of the missile position
         self.x = float(self.rect.x)
@@ -37,3 +39,12 @@ class Missile(Sprite):
     def draw_missile(self):
         """Draw missile on current location."""
         pygame.draw.rect(self.screen, self.color, self.rect)
+
+    def _set_initial_position(self):
+        """
+        Calculate an initial random position for the missile at the top of 
+        the screen.
+        """
+        pos_x = randint(0, self.screen_rect.width)
+        self.rect.midbottom = (pos_x, 0)
+

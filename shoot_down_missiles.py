@@ -27,13 +27,8 @@ class ShootDownMissiles:
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            self.missiles.update()
             self.target.update()
-
-            # Get rid of missiles that have disappeared.
-            for missile in self.missiles.copy():
-                if missile.rect.top > self.settings.screen_height:
-                    self.missiles.remove(missile)
+            self._update_missiles()
             self._update_screen()
 
     def _check_events(self):
@@ -87,6 +82,13 @@ class ShootDownMissiles:
 
         pygame.display.flip()
 
+    def _update_missiles(self):
+        """Update position of missiles and get rid of old missiles."""
+        self.missiles.update()
+        # Get rid of missiles that have disappeared.
+        for missile in self.missiles.copy():
+            if missile.rect.top > self.settings.screen_height:
+                self.missiles.remove(missile)
 
 
 if __name__ == '__main__':
