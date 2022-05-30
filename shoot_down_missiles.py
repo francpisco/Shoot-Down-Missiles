@@ -29,6 +29,11 @@ class ShootDownMissiles:
             self._check_events()
             self.missiles.update()
             self.target.update()
+
+            # Get rid of missiles that have disappeared.
+            for missile in self.missiles.copy():
+                if missile.rect.top > self.settings.screen_height:
+                    self.missiles.remove(missile)
             self._update_screen()
 
     def _check_events(self):
