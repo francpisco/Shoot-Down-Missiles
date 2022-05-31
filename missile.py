@@ -24,6 +24,7 @@ class Missile(Sprite):
         
         self._set_initial_position()
         self._set_initial_direction()
+        self._set_initial_curve()
 
         # Store decimal values of the missile position
         self.x = float(self.rect.x)
@@ -39,6 +40,9 @@ class Missile(Sprite):
         # Update the rect position.
         self.rect.y = self.y
         self.rect.x = self.x
+
+        self._update_angle()
+        self._update_curve()
 
     def draw_missile(self):
         """Draw missile on current location."""
@@ -59,5 +63,31 @@ class Missile(Sprite):
         """
         self.angle = uniform(-self.settings.missile_max_angle,
                              self.settings.missile_max_angle)
-        print(self.angle)
+
+    def _set_initial_curve(self):
+        """
+        Calculate an initial curvature to missile course.
+        """
+        self.curve = uniform(-self.settings.missile_max_curve,
+                             self.settings.missile_max_curve)
+
+    def _update_angle(self):
+        """
+        Update angle of missile tragectory as a function of curvature.
+        """
+        self.angle += self.curve
+
+
+    def _update_curve(self):
+        """
+        Update curve of missile tragectory gradually.
+        """
+        curve_increment = uniform(-self.settings.missile_max_curve * 0.1,
+                                  self.settings.missile_max_curve * 0.1)
+        if (self.curve + curve_increment) > self.settings.missile_max_curve:
+            self.curve -= curve_increment
+        elif (self.curve + curve_increment) < -self.settings.missile_max_curve:
+            self.curve -= curve_increment
+        else:
+            self.curve += curve_increment
 
