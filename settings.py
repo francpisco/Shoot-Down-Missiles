@@ -19,3 +19,4 @@ class Settings:
         self.missile_width = 5
         self.missile_height = 30
         self.missile_color = (70, 70, 70)
+        self.missile_max_angle = 0.52  # radians

@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
-from random import randint
+from random import randint, uniform
+from math import cos, sin
 
 class Missile(Sprite):
     """A class to manage oncoming missiles to be shoot down."""
@@ -22,6 +23,7 @@ class Missile(Sprite):
                                 self.settings.missile_height)
         
         self._set_initial_position()
+        self._set_initial_direction()
 
         # Store decimal values of the missile position
         self.x = float(self.rect.x)
@@ -31,10 +33,12 @@ class Missile(Sprite):
     def update(self):
         """Move the missile down the screen."""
         # Update the decimal position of the missile.
-        self.y += self.settings.missile_speed
+        self.y += self.settings.missile_speed * cos(self.angle)
+        self.x += self.settings.missile_speed * sin(self.angle)
 
         # Update the rect position.
         self.rect.y = self.y
+        self.rect.x = self.x
 
     def draw_missile(self):
         """Draw missile on current location."""
@@ -47,4 +51,13 @@ class Missile(Sprite):
         """
         pos_x = randint(0, self.screen_rect.width)
         self.rect.midbottom = (pos_x, 0)
+
+    def _set_initial_direction(self):
+        """
+        Calculate an initial direction for the missile.
+        It can vary between negative maximum and positive max angle.
+        """
+        self.angle = uniform(-self.settings.missile_max_angle,
+                             self.settings.missile_max_angle)
+        print(self.angle)
 
